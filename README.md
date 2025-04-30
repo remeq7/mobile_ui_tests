@@ -19,7 +19,7 @@ Automated UI tests for mobile applications using Appium and Python.
    ```
 4. Run the test:
    ```bash
-   python test_appium_apk.py
+   python -m tests.test_appium_apk
    ```
 
 ## 🧪 Contents
