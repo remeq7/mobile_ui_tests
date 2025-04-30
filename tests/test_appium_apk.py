@@ -1,17 +1,9 @@
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 import time
-from selenium.common.exceptions import NoSuchElementException
+from utils.driver_setup import init_driver
 
-desired_caps = {
-    "platformName": "Android",
-    "deviceName": "Android Emulator",
-    "automationName": "UiAutomator2",
-    "app": r"C:\Users\Remek\Desktop\mobile_ui_tests\TheApp.apk",
-    "autoGrantPermissions": True
-}
-
-driver = webdriver.Remote("http://localhost:4723", desired_caps)
+driver = init_driver("apk/TheApp.apk")
 
 # Kliknij "Echo Box"
 echo_box = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR,
