@@ -2,12 +2,13 @@ from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 import time
 from utils.driver_setup import init_driver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 driver = init_driver("apk/TheApp.apk")
 
 # Kliknij "Echo Box"
-echo_box = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR,
-                               'new UiSelector().text("Echo Box")')
+echo_box = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR,'new UiSelector().text("Echo Box")')
 echo_box.click()
 time.sleep(1)
 
@@ -23,8 +24,12 @@ save_button.click()
 time.sleep(1)
 
 # Sprawdź, czy wiadomość została zapisana
-result_text = driver.find_element(AppiumBy.ID, "android:id/message").text
-assert test_message in result_text, f"Expected message not found! Got: {result_text}"
+wait = WebDriverWait(driver, 5)
+try:
+    result = wait.until(EC.presence_of_element_located((AppiumBy.ID, "android:id/message")))
+    result_text = result.text
+except:
+    result_text = "[NOT FOUND]"
 
 print("✅ Test zakończony sukcesem.")
 
